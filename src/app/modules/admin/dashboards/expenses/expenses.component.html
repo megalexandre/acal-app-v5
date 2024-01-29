@@ -1,0 +1,193 @@
+<div class="flex flex-col flex-auto w-full" *transloco="let t">
+
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+
+        <!-- Title and action buttons -->
+        <div class="flex items-center justify-between w-full" >
+            <div>
+                <h2 class="text-3xl font-semibold tracking-tight leading-8"> {{t('finance')}} </h2> 
+                <div class="font-medium tracking-tight text-secondary">{{t('expenses.title')}}</div>
+            </div>
+            <div class="flex items-center ml-6">
+                
+                <button
+                    class="hidden sm:inline-flex"
+                    mat-stroked-button>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:document-chart-bar'"></mat-icon>
+                    <span class="ml-2">{{t('expenses.reports')}}</span>
+                </button>
+                
+                <button
+                    class="hidden sm:inline-flex ml-3"
+                    mat-stroked-button>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:cog-8-tooth'"></mat-icon>
+                    <span class="ml-2">{{t('expenses.settings')}}</span>
+                </button>
+
+                <button
+                    class="hidden sm:inline-flex ml-3"
+                    mat-flat-button
+                    [color]="'primary'">
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:arrow-up-tray'"></mat-icon>
+                    <span class="ml-2">{{t('expenses.export')}}</span>
+                </button>
+
+                <!-- Actions menu (visible on xs) -->
+                <div class="sm:hidden">
+                    <button
+                        [matMenuTriggerFor]="actionsMenu"
+                        mat-icon-button>
+                        <mat-icon [svgIcon]="'heroicons_mini:ellipsis-vertical'"></mat-icon>
+                    </button>
+                    <mat-menu #actionsMenu="matMenu">
+                        <button mat-menu-item>Export</button>
+                        <button mat-menu-item>Reports</button>
+                        <button mat-menu-item>Settings</button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent transactions table -->
+        <div class="grid grid-cols-1 gap-8 w-full mt-8">
+            <div class="xl:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+                
+                <div class="p-6">
+                    <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Recent transactions</div>
+                    <div class="text-secondary font-medium">1 pending, 4 completed</div>
+                </div>
+
+                <div class="overflow-x-auto mx-6">
+                    <table
+                        class="w-full bg-transparent"
+                        mat-table
+                        matSort
+                        [dataSource]="recentTransactionsDataSource"
+                        [trackBy]="trackByFn"
+                        #recentTransactionsTable>
+
+                        <!-- Transaction ID -->
+                        <ng-container matColumnDef="transactionId">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef>
+                                ID
+                            </th>
+
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction">
+                                <span class="pr-6 font-medium text-sm text-secondary whitespace-nowrap">
+                                    {{transaction.transactionId}}
+                                </span>
+                            </td>
+
+                        </ng-container>
+
+                        <!-- Date -->
+                        <ng-container matColumnDef="date">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef>
+                                Data
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction">
+                                <span class="pr-6 whitespace-nowrap">
+                                    {{transaction.date | date}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Name -->
+                        <ng-container matColumnDef="name">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef>
+                                Nome
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction">
+                                <span class="pr-6 whitespace-nowrap">
+                                    {{transaction.name}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Amount -->
+                        <ng-container matColumnDef="amount">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef>
+                                Valor
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction">
+                                <span class="pr-6 font-medium whitespace-nowrap">
+                                    {{transaction.amount | currency}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Status -->
+                        <ng-container matColumnDef="status">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef>
+                                Status
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction">
+                                <span
+                                    class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase"
+                                    [ngClass]="{'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50': transaction.status === 'pending',
+                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50': transaction.status === 'completed'}">
+                                    <span class="leading-relaxed whitespace-nowrap">{{transaction.status | expense }}</span>
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Footer -->
+                        <ng-container matColumnDef="recentOrdersTableFooter">
+                            <td
+                                class="py-6 px-0 border-0"
+                                mat-footer-cell
+                                *matFooterCellDef
+                                colspan="6">
+                                <button mat-stroked-button>{{t('expenses.all-transactions')}}</button>
+                            </td>
+                        </ng-container>
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="recentTransactionsTableColumns"></tr>
+                        <tr
+                            class="order-row h-16"
+                            mat-row
+                            *matRowDef="let row; columns: recentTransactionsTableColumns;"></tr>
+                        <tr
+                            class="h-16 border-0"
+                            mat-footer-row
+                            *matFooterRowDef="['recentOrdersTableFooter']"></tr>
+                    </table>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+</div>

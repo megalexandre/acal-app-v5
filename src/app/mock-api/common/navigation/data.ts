@@ -31,6 +31,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link : '/dashboards/finance',
             },
             {
+                id   : 'dashboards.expenses',
+                title: 'Expense',
+                type : 'basic',
+                icon : 'heroicons_outline:currency-dollar',
+                link : '/dashboards/expenses',
+            },
+            {
                 id   : 'dashboards.crypto',
                 title: 'Crypto',
                 type : 'basic',
@@ -40,11 +47,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         ],
     },
     {
+
+
         id      : 'apps',
         title   : 'Applications',
         subtitle: 'Custom made application designs',
         type    : 'group',
-        icon    : 'heroicons_outline:home',
+        icon    : 'heroicons_outline:currency-dollar',
         children: [
             {
                 id   : 'apps.academy',

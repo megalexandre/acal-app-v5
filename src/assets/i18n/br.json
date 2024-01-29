@@ -1,5 +1,15 @@
 {
     "welcome-back": "Bem-vindo de volta",
     "Project": "Projeto",
-    "Analytics": "Análises"
+    "Analytics": "Análises",
+    "finance": "Finanças",
+
+    "expenses":{
+        "title": "Resumo financeiro",
+        "reports": "Relátorios",
+        "settings": "Configurações",
+        "export": "Exportar",
+        "all-transactions": "Veja todas as transações"
+    }
+
 }

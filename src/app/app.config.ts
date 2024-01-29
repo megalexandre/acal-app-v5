@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID, inject } from '@angular/core';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -12,6 +12,9 @@ import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localePt);
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -22,6 +25,13 @@ export const appConfig: ApplicationConfig = {
             withInMemoryScrolling({scrollPositionRestoration: 'enabled'}),
         ),
 
+        { 
+            provide: LOCALE_ID, useValue: 'pt-BR'
+        },
+        { 
+            provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL'
+        },
+        
         // Material Date Adapter
         {
             provide : DateAdapter,

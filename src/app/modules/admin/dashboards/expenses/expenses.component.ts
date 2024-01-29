@@ -8,19 +8,20 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TranslocoModule } from '@ngneat/transloco';
-import { FinanceService } from 'app/modules/admin/dashboards/finance/finance.service';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
+import { ExpensesService } from './expenses.service';
+import { ExpensePipe } from '@fuse/pipes/expense/expense.pipe';
 
 @Component({
-    selector       : 'finance',
-    templateUrl    : './finance.component.html',
+    selector       : 'expenses',
+    templateUrl    : './expenses.component.html',
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [TranslocoModule, MatButtonModule, MatIconModule, MatMenuModule, MatDividerModule, NgApexchartsModule, MatTableModule, MatSortModule, NgClass, MatProgressBarModule, CurrencyPipe, DatePipe],
+    imports        : [ExpensePipe, TranslocoModule, MatButtonModule, MatIconModule, MatMenuModule, MatDividerModule, NgApexchartsModule, MatTableModule, MatSortModule, NgClass, MatProgressBarModule, CurrencyPipe, DatePipe],
 })
-export class FinanceComponent implements OnInit, AfterViewInit, OnDestroy
+export class ExpensesComponent implements OnInit, AfterViewInit, OnDestroy
 {
     @ViewChild('recentTransactionsTable', {read: MatSort}) recentTransactionsTableMatSort: MatSort;
 
@@ -33,7 +34,7 @@ export class FinanceComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * Constructor
      */
-    constructor(private _financeService: FinanceService)
+    constructor(private _financeService: ExpensesService)
     {
     }
 
@@ -56,9 +57,6 @@ export class FinanceComponent implements OnInit, AfterViewInit, OnDestroy
 
                 // Store the table data
                 this.recentTransactionsDataSource.data = data.recentTransactions;
-
-                // Prepare the chart data
-                this._prepareChartData();
             });
     }
 
@@ -100,55 +98,4 @@ export class FinanceComponent implements OnInit, AfterViewInit, OnDestroy
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Prepare the chart data from the data
-     *
-     * @private
-     */
-    private _prepareChartData(): void
-    {
-        // Account balance
-        this.accountBalanceOptions = {
-            chart  : {
-                animations: {
-                    speed           : 400,
-                    animateGradually: {
-                        enabled: false,
-                    },
-                },
-                fontFamily: 'inherit',
-                foreColor : 'inherit',
-                width     : '100%',
-                height    : '100%',
-                type      : 'area',
-                sparkline : {
-                    enabled: true,
-                },
-            },
-            colors : ['#A3BFFA', '#667EEA'],
-            fill   : {
-                colors : ['#CED9FB', '#AECDFD'],
-                opacity: 0.5,
-                type   : 'solid',
-            },
-            series : this.data.accountBalance.series,
-            stroke : {
-                curve: 'straight',
-                width: 2,
-            },
-            tooltip: {
-                followCursor: true,
-                theme       : 'dark',
-                x           : {
-                    format: 'MMM dd, yyyy',
-                },
-                y           : {
-                    formatter: (value): string => value + '%',
-                },
-            },
-            xaxis  : {
-                type: 'datetime',
-            },
-        };
-    }
 }
