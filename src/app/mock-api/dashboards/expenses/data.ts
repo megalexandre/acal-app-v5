@@ -13,6 +13,51 @@ export const expenses = {
         billsLimit   : 1000,
     },
 
+    expenses:[
+        {
+            id          : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            parentId    : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            value       :  90.00,
+            reason      : 'mensalidade',
+            expenseType :  'in',
+            createdAt   : '2019-10-07T22:22:37.274Z',
+        },
+        {
+            id          : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            parentId    : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            value       :  90.00,
+            reason      : 'mensalidade',
+            expenseType :  'in',
+            createdAt   : '2019-10-07T22:22:37.274Z',
+        },
+        {
+            id          : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            parentId    : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            value       :  135.75,
+            reason      : 'mensalidade',
+            expenseType :  'in',
+            createdAt   : '2019-10-07T22:22:37.274Z',
+        },
+        {
+            id          : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            parentId    : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            value       :  80.75,
+            reason      : 'mensalidade',
+            expenseType :  'in',
+            createdAt   : '2019-10-07T22:22:37.274Z',
+        },
+        {
+            id          : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            parentId    : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
+            value       :  70.75,
+            reason      : 'mensalidade',
+            expenseType :  'in',
+            createdAt   : '2019-10-07T22:22:37.274Z',
+        },
+
+    ],
+
+
     recentTransactions: [
         {
             id           : '1b6fd296-bc6a-4d45-bf4f-e45519a58cf5',
@@ -22,14 +67,7 @@ export const expenses = {
             status       : 'completed',
             date         : '2019-10-07T22:22:37.274Z',
         },
-        {
-            id           : '2dec6074-98bd-4623-9526-6480e4776569',
-            transactionId: '421436904YT',
-            name         : 'Alexandre Queiroz',
-            amount       : -1042.82,
-            status       : 'completed',
-            date         : '2019-12-18T14:51:24.461Z',
-        },
+       
         {
             id           : 'ae7c065f-4197-4021-a799-7a221822ad1d',
             transactionId: '685377421YT',

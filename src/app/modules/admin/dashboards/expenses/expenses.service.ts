@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
@@ -33,9 +33,10 @@ export class ExpensesService
     /**
      * Get data
      */
-    getData(): Observable<any>
-    {
-        return this._httpClient.get('api/dashboards/expenses').pipe(
+    getData(): Observable<any>{
+
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this._httpClient.get('http://localhost:8080/expense',  { headers } ).pipe(
             tap((response: any) =>
             {
                 this._data.next(response);

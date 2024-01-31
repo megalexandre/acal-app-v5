@@ -9,7 +9,9 @@
         "reports": "Relátorios",
         "settings": "Configurações",
         "export": "Exportar",
-        "all-transactions": "Veja todas as transações"
-    }
+        "all_transactions": "Veja todas as transações",
+        "last_transactions": "Últimas transações",
+        "accumulated": "Acumulado"
 
+    }
 }
