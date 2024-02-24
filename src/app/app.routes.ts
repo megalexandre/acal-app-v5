@@ -77,7 +77,7 @@ export const appRoutes: Route[] = [
 
             // Operations
             {path: 'register', children: [
-                {path: 'category', loadChildren: () => import('app/modules/admin/operations/scrumboard/scrumboard.routes')},
+                {path: 'category', loadChildren: () => import('app/modules/admin/register/category/category.routes')},
             ]},
 
             // Operations
