@@ -9,3 +9,11 @@ export interface Expense {
     createdAt: Date,
 }
 
+export interface Summary{
+    title: string,
+    value: string,
+    description: string, 
+    subtitle: string,
+    subvalue: string,
+}
+

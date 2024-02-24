@@ -75,6 +75,16 @@ export const appRoutes: Route[] = [
         },
         children: [
 
+            // Operations
+            {path: 'register', children: [
+                {path: 'category', loadChildren: () => import('app/modules/admin/operations/scrumboard/scrumboard.routes')},
+            ]},
+
+            // Operations
+            {path: 'operations', children: [
+                {path: 'boards', loadChildren: () => import('app/modules/admin/operations/scrumboard/scrumboard.routes')},
+            ]},
+
             // Dashboards
             {path: 'dashboards', children: [
                 {path: 'project', loadChildren: () => import('app/modules/admin/dashboards/project/project.routes')},
@@ -83,6 +93,8 @@ export const appRoutes: Route[] = [
                 {path: 'crypto', loadChildren: () => import('app/modules/admin/dashboards/crypto/crypto.routes')},
                 {path: 'expenses', loadChildren: () => import('app/modules/admin/dashboards/expenses/expenses.routes')},
             ]},
+
+           
 
             // Apps
             {path: 'apps', children: [

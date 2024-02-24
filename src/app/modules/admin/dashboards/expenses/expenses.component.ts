@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ExpensesService } from './expenses.service';
 import { FuseCardComponent } from '@fuse/components/card/public-api';
 import { SummaryComponent } from '@fuse/components/summary/public-api';
-import { Expense } from './expenses';
+import { Expense, Summary } from './expenses';
 
 @Component({
     selector       : 'expenses',
@@ -26,87 +26,42 @@ import { Expense } from './expenses';
 })
 export class ExpensesComponent implements OnInit, AfterViewInit, OnDestroy
 {
-    @ViewChild('recentTransactionsTable', {read: MatSort}) recentTransactionsTableMatSort: MatSort;
     @ViewChild('expensesTable', {read: MatSort}) expensesTableMatSort: MatSort;
-
-    data: any;
 
     expensesDataSource: MatTableDataSource<any> = new MatTableDataSource();
     expensesTableColumns: string[] = [ 'reason', 'value', 'createdAt','id'] ;
 
-    recentTransactionsDataSource: MatTableDataSource<any> = new MatTableDataSource();
-    recentTransactionsTableColumns: string[] = ['transactionId', 'date', 'name', 'amount', 'status'];
-
-    accumulated: any;
+    accumulated: number;
     
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    
+    summaries: Summary[]; 
 
-    /**
-     * Constructor
-     */
-    constructor(private _financeService: ExpensesService)
-    {
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    
+    constructor(private _financeService: ExpensesService) {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
-    ngOnInit(): void
-    {
-        // Get the data
+    ngOnInit(): void {
         this._financeService.data$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: Expense[] ) =>
             {
-                // Store the data
-                this.data = data;
-
-                // Store the table data
-                //this.recentTransactionsDataSource.data = data.recentTransactions;
                 this.expensesDataSource.data = data;
                 this.accumulated = data.reduce((sum, expense) => sum + expense.value, 0);
             });
     }
 
-    /**
-     * After view init
-     */
     ngAfterViewInit(): void {
-        // Make the data source sortable
-        this.recentTransactionsDataSource.sort = this.recentTransactionsTableMatSort;
         this.expensesDataSource.sort = this.expensesTableMatSort;
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any
-    {
+    trackByFn(index: number, item: any): any {
         return item.id || index;
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
 
 }

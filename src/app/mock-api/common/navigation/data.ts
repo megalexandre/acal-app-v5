@@ -2,6 +2,24 @@
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
+
+    {
+        id      : 'register',
+        title   : 'Cadastros',
+        subtitle: 'Cadastros',
+        type    : 'group',
+        icon    : 'heroicons_outline:register',
+        children: [
+            {
+                id   : 'register.category',
+                title: 'Categoria',
+                type : 'basic',
+                icon : 'heroicons_outline:user-group',
+                link : '/register/category',
+            },
+        ]
+    },
+
     {
         id      : 'dashboards',
         title   : 'Dashboards',
@@ -46,6 +64,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
         ],
     },
+    
     {
 
 
@@ -1184,14 +1203,26 @@ export const compactNavigation: FuseNavigationItem[] = [
         children: [], // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
     {
+        id      : 'register',
+        title   : 'Cadastros',
+        tooltip : 'Cadastros',
+        type    : 'aside',
+        icon    : 'heroicons_outline:archive-box',
+        children: [], // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    },
+    {
         id      : 'apps',
         title   : 'Apps',
         tooltip : 'Apps',
         type    : 'aside',
-        icon    : 'heroicons_outline:qrcode',
+        icon    : 'heroicons_outline:arrow-path-rounded-square',
         children: [], // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
+
+
     {
+
+
         id      : 'pages',
         title   : 'Pages',
         tooltip : 'Pages',
