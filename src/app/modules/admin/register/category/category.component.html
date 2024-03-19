@@ -1,0 +1,81 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 pb-22 sm:pt-12 sm:pb-28 sm:px-10 bg-default dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div>
+                <div class="hidden sm:flex flex-wrap items-center font-medium">
+                    <div>
+                        <a class="whitespace-nowrap text-primary-500">Cadastros</a>
+                    </div>
+                </div>
+                <div class="flex sm:hidden">
+                    <a
+                        class="inline-flex items-center -ml-1.5 text-secondary font-medium"
+                        [routerLink]="'./..'">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
+                        <span class="ml-1">Back</span>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Categorias
+                </h2>
+            </div>
+        </div>
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <button
+                class="ml-3"
+                mat-flat-button
+                [color]="'primary'">
+                <mat-icon
+                    class="icon-size-4"
+                    [svgIcon]="'heroicons_mini:link'"></mat-icon>
+                <span class="ml-2">Adicionar</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex-auto -mt-16 p-6 sm:p-10 rounded-t-2xl shadow bg-card">
+
+        <div class="flex flex-col flex-auto w-full" *ngIf="loaded">
+            <div class="flex flex-col flex-auto">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+            
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Tipo: </th>
+                        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Nome: </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="water">
+                        <th mat-header-cell *matHeaderCellDef> Valor da Água: </th>
+                        <td mat-cell *matCellDef="let element"> {{element.values[0].value | currency}} </td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef> Valor da Associação: </th>
+                        <td mat-cell *matCellDef="let element"> {{element.values[1].value | currency}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef> Valor Total: </th>
+                        <td mat-cell *matCellDef="let element"> {{element.total | currency}} </td>
+                    </ng-container>
+            
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+        <mat-paginator   [length]="totalElements" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+
+
+
