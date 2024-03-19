@@ -13,8 +13,8 @@ export interface CategoryPageFilter {
     id?: string;
     name?: string;
     type?: string;
-    offset?: string;
-    size?: string;
+    offset?: number;
+    size?: number;
     field?: string;
     direction?: Direction;
 }
