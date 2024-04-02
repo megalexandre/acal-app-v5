@@ -4,6 +4,11 @@
     "Analytics": "Análises",
     "finance": "Finanças",
 
+    "categories":{
+        "add": "Adicionar",
+        "list": "Listar"
+    },
+
     "expenses":{
         "title": "Resumo financeiro",
         "reports": "Relátorios",

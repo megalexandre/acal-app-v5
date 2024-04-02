@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { CategoryPageFilter, CategoryTable } from './category.types';
+import { CategoryCreate, CategoryPageFilter, CategoryTable } from './category.types';
 
 @Injectable()
 export class CategoryService {
@@ -11,7 +11,7 @@ export class CategoryService {
     constructor(private _httpClient: HttpClient){
     }
 
-    paginate(filter: CategoryPageFilter): Observable<CategoryTable>{
+    public paginate(filter: CategoryPageFilter): Observable<CategoryTable>{
  
         const params = this.convertToHttpParams(filter);
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -25,6 +25,15 @@ export class CategoryService {
 
     }
 
+    public create(categoryCreate: CategoryCreate): Observable<any> {
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    
+        return this._httpClient.post<CategoryCreate>(
+          `${environment.baseurl}/category`,
+          categoryCreate,
+          { headers }
+        );
+      }
 
     private convertToHttpParams(filter: CategoryPageFilter): HttpParams {
         let params = new HttpParams();
@@ -35,4 +44,6 @@ export class CategoryService {
         }
         return params;
     }
+
+    
 }

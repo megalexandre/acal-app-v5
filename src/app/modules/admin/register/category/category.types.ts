@@ -19,8 +19,18 @@ export interface CategoryPageFilter {
     direction?: Direction;
 }
 
+export interface CategoryCreate{
+    name: string,
+    type: CategoryType,
+    values:{name: string, value: number}[]
+}
 
-export interface Direction {"asc": "desc"}; 
+export interface CategoryCreateResponse{
+    id: string;
+}
+
+export type CategoryType = "FOUNDING" | "Sócio Efetivo" | "Temporário";
+export type Direction = "asc" | "desc"; 
 
 export interface Page<T>{
     content: T[],

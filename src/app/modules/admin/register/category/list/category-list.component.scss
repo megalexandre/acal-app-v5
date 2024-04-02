@@ -1,17 +1,42 @@
+table {
+    width: 100%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+}
+  
+.mat-mdc-row:hover .mat-mdc-cell {
+    background-color: rgb(240,240,240);
+}
+
+.mat-column-type {
+    width: 15%;
+}
+.mat-column-name {
+    width: 50%;
+}
+
+.mat-column-water {
+    width: 10%;
+    text-align: center;
+}
+
+.mat-column-category {
+    width: 10%;
+    text-align: center;
+}
+
 .mat-column-total {
+    width: 10%;
     border-left: 1px solid currentColor;
     text-align: center;
 }
 
-.mat-column-water {
+.mat-column-actions{
+    width: 5%;
     text-align: center;
+    background-color:  rgb(252,252,252);
+    box-shadow: inset 8px 0px 10px -10px rgba(0,0,0,0.75);
 }
-  
-.mat-column-category {
-    text-align: center;
-}
-  
-.mat-paginator {
-    display: flex;
-    justify-content: center;
-} 
+

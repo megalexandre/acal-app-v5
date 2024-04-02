@@ -1,11 +1,8 @@
-import { CdkScrollable } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CategoryService } from './category.service';
 
 @Component({
@@ -13,13 +10,35 @@ import { CategoryService } from './category.service';
     templateUrl     : './category.component.html',
     standalone      : true,
     styleUrls       : ['./category.component.scss'], 
-    imports         : [ MatTableModule, MatPaginatorModule,  CommonModule, MatIconModule, MatButtonModule, CdkScrollable,  RouterLink, RouterOutlet],
+    imports         : [  CommonModule, MatIconModule, MatButtonModule, RouterLink, RouterOutlet],
     providers       : [ CategoryService ]
 })
 export class CategoryComponent {
 
-    constructor(){
+
+    
+    constructor(private router: Router, private route: ActivatedRoute){
         
     }
+
+    public add(){
+        const isAdding = this.router.url.endsWith('/add')
+
+        let route: string;
+        if(isAdding){
+            route = 'list'
+        } else {
+            route = 'add'
+        }
+
+        this.router.navigate([route], { relativeTo: this.route });
+    }
+
+
+    getTextAction(): string {
+        const currentRoute = this.router.url;
+        return currentRoute.endsWith('/add') ? 'list' : 'add';
+    }
+
 
 }

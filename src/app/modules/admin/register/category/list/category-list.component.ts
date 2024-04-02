@@ -1,30 +1,50 @@
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CategoryService } from '../category.service';
-import { CategoryTable, Category, CategoryPageFilter } from '../category.types';
+import { Category, CategoryPageFilter, CategoryTable } from '../category.types';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+
+const modules = [ 
+    CommonModule, 
+    CdkScrollable,  
+    MatMenuModule, 
+    MatTableModule, 
+    MatIconModule, 
+    MatPaginatorModule, 
+    MatSidenavModule,
+    MatIconModule, 
+    MatButtonModule,
+    MatExpansionModule, 
+    RouterLink,
+    RouterOutlet,
+]
 
 @Component({
     selector        : 'category-list',
     templateUrl     : './category-list.component.html',
     standalone      : true,
     styleUrls       : ['./category-list.component.scss'], 
-    imports         : [ MatTableModule, MatPaginatorModule,  CommonModule, MatIconModule, MatButtonModule, CdkScrollable,  RouterLink],
+    imports         : [ ...modules],
     providers       : [ CategoryService ]
 })
 export class CategoryListComponent implements OnInit {
+    
 
     @ViewChild(MatPaginator) 
     public paginator: MatPaginator;
 
-    public totalElements = 0;
-    public isLoading = false;
-    public displayedColumns: string[] = ['type','name', 'water', 'category', 'total'];
+    public isLoading = true;
+    public displayedColumns: string[] = ['type','name', 'water', 'category', 'total', 'actions'];
+    
     public pageSizeOption = [5, 10, 25, 50]
     public data: CategoryTable;
     public dataSource = new MatTableDataSource<Category>();
@@ -35,12 +55,19 @@ export class CategoryListComponent implements OnInit {
         offset: 0,
     }
 
-    constructor(private categoryService: CategoryService){
+    constructor(
+        private _categoryService: CategoryService,
+        private _activatedRoute: ActivatedRoute,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router,
+        ){
+            
     }
 
     ngOnInit(): void {
        this.getData();
     }
+
 
     public getPage(pageEvent: PageEvent){
         this.filter.size = pageEvent.pageSize;
@@ -48,14 +75,21 @@ export class CategoryListComponent implements OnInit {
         this.getData();
     }
 
+    public edit(id: string){
+        console.log(id)
+    }
+
+    public delete(id: string){
+        console.log(id)
+    }
 
     private getData(){
-        this.categoryService.paginate(this.filter).subscribe((data: CategoryTable)=>{
+        this._categoryService.paginate(this.filter).subscribe((data: CategoryTable)=>{
             this.data = data;
             this.dataSource = new MatTableDataSource<Category>(data.content);
-            this.totalElements = data.totalElements;
             this.isLoading = false;
         })
     }
+
 
 }
